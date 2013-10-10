@@ -1,0 +1,6 @@
+The htmlcxx code is covered by the LGPL license found in the LGPL_V2 file in
+this distribution. The tree.hh code, used in this code, is covered by the
+license in the original distribution at http://tree.phi-sci.com/. Only
+HTML::Node instances, which the only instances used by htmlcxx, are available
+under the LGPL. The uri parsing code is a derivative work of Apache web server
+uri parsing routine and covered by the ASF-2.0 file in this distribution.

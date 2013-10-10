@@ -1,0 +1,69 @@
+2008-10-12 18:41  davi
+
+	* Applied patch by Luca Bruno fixing gcc 4.3 compilation problems.
+
+2007-08-11 20:23  davi
+
+	* Bumped release again because sf.net problems.
+
+2007-08-11 20:14  davi
+
+	* Updated version.
+
+2007-08-11 20:06  davi
+
+	*
+	  Fixed long standing typename bug.
+
+2006-06-16 12:45  davi
+
+	* Added missing files.
+
+2006-06-16 12:23  davi
+
+	* Added missing files and incorporate some pending fixes.
+
+2005-03-24 00:59  davi
+
+	* Removed useless files.
+
+2005-03-24 00:58  davi
+
+	* Small fixes for distribution.
+
+2005-02-22 01:47  davi
+
+	* Lots of changes. Bumped version to 0.7.3.
+
+2004-06-17 16:17  braga
+
+	* Updated some documentation.
+
+2004-06-16 13:38  braga
+
+	* Commiting all changes from local cvs.
+
+2004-03-27 10:56  davi
+
+	* Added css parser.
+
+2004-03-25 16:33  davi
+
+	* Added sample htmlcxx application.
+
+2004-03-25 16:24  davi
+
+	* Initial revision
+
+2004-03-25 16:24  davi
+
+	* htmlcxx is now in CVS
+
+2003-12-13 23:27  davi
+
+	* Initial revision
+
+2003-12-13 23:27  davi
+
+	* htmlcxx - html and css APIs for C++
+

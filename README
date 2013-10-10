@@ -1,0 +1,136 @@
+htmlcxx - html and css APIs for C++
+
+---------------------------------------------
+
+
+	Description
+	===========
+
+htmlcxx is a simple non-validating css1 and html parser for C++.
+Although there are several other html parsers available, htmlcxx has some
+characteristics that make it unique:
+
+- STL like navigation of DOM tree, using excelent's tree.hh library from
+  Kasper Peeters 
+- It is possible to reproduce exactly, character by character, the
+  original document from the parse tree
+- Bundled css parser
+- Optional parsing of attributes	
+- C++ code that looks like C++ (not so true anymore)
+- Offsets of tags/elements in the original document are stored in the
+  nodes of the DOM tree
+
+The parsing politics of htmlcxx were created trying to mimic mozilla
+firefox (http://www.mozilla.org) behavior. So you should expect parse
+trees similar to those create by firefox. However, differently from firefox,
+htmlcxx does not insert non-existent stuff in your html. Therefore, serializing
+the DOM tree gives exactly the same bytes contained in the original HTML
+document.
+
+
+        News for version 0.85
+        =====================
+
+Fixed gcc 4.3 compiler errors, several minor bug fixes, improved distribution
+of the css library.
+
+
+	News for version 0.7.3
+	======================
+
+Added utility code to escape/decode urls as defined by RFC 2396.
+Added new SAX interface. The API was slightly broken to support the new
+SAX interface :-(.
+Added Visual Studio 2003 projects for the WIN32 port.
+
+
+	Examples
+	========
+
+Using htmlcxx is quite simple. Take a look
+at this example.
+
+-----------------------------------------------------------------------
+
+  #include <htmlcxx/html/ParserDom.h>
+  ...
+  using namespace std;
+  using namespace htmlcxx;
+  
+  //Parse some html code
+  string html = "<html><body>hey</body></html>";
+  HTML::ParserDom parser;
+  tree<HTML::Node> dom = parser.parseTree(html);
+  
+  //Print whole DOM tree
+  cout << dom << endl;
+  
+  //Dump all links in the tree
+  tree<HTML::Node>::iterator it = dom.begin();
+  tree<HTML::Node>::iterator end = dom.end();
+  for (; it != end; ++it)
+  {
+     if (strcasecmp(it->tagName().c_str(), "A") == 0)
+     {
+       it->parseAttributes();
+       cout << it->attribute("href").second << endl;
+     }
+  }
+  
+  //Dump all text of the document
+  it = dom.begin();
+  end = dom.end();
+  for (; it != end; ++it)
+  {
+    if ((!it->isTag()) && (!it->isComment()))
+    {
+      cout << it->text();
+    }
+  }
+  cout << endl;
+
+-------------------------------------------------
+
+
+	The htmlcxx application
+	=======================
+
+htmlcxx is the name of both the library and the utility
+application that comes with this package. Although the 
+htmlcxx (the application) is mostly useless for programming, you can use it 
+to easily see how htmlcxx (the library) would parse your html code.
+Just install and try htmlcxx -h.
+
+
+	Downloads
+	=========
+
+Use the project page at sourceforge: http://sf.net/projects/htmlcxx
+
+
+	License Stuff
+	=============
+
+Code is now under the LGPL. This was our initial intention, and is
+now possible thanks to the author of tree.hh, who allowed us to use it
+under LGPL only for HTML::Node template instances. Check 
+http://www.fsf.org or the COPYING file in the distribution for details
+about the LGPL license. The uri parsing code is a derivative work of
+Apache web server uri parsing routines. Check 
+www.apache.org/licenses/LICENSE-2.0 or the ASF-2.0 file in the
+distribution for details.
+
+----------------------------------------
+
+Enjoy!
+
+Davi de Castro Reis - <davi (a) users sf net>
+
+Robson Braga Araújo - <braga (a) users sf net>
+
+Last Updated: Thu Mar 24 00:56:05 2005
+
+
+
+
+
