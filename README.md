@@ -5,7 +5,7 @@ a simple html and css parser written in C++. clone of http://htmlcxx.sourceforge
 
 install
 -------
-* sudo apt install autoconf
+* sudo apt install autoconf libtool
 
 * ref: https://stackoverflow.com/questions/22603163/automake-error-ltmain-sh-not-found
 
