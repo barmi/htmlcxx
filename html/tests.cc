@@ -75,10 +75,10 @@ class HtmlTest {
 		myassert(HTML::single_blank(multiblank) == "1 2 3 4 5 6");
 		myassert(HTML::single_blank(justblank) == "");
 		myassert(HTML::single_blank(nonblank) == nonblank);
-		myassert(HTML::decode_entities(entities) == "nos somos do clube atletico mineiro á á brasil   &teste; ãä &aacute â &end   ");
+		myassert(HTML::decode_entities(entities) == "nos somos do clube atletico mineiro ï¿½ ï¿½ brasil   &teste; ï¿½ï¿½ &aacute ï¿½ &end   ");
 		myassert(HTML::convert_link(link1, root_link) == "http://www.akwan.com.br/a.html");
 		myassert(HTML::convert_link(link2, root_link) == "http://www.akwan.com.br/b.html");
-		myassert(HTML::convert_link(link3, root_link) == "http://www.akwan.com.br/teste/serviço.html");
+		myassert(HTML::convert_link(link3, root_link) == "http://www.akwan.com.br/teste/serviï¿½o.html");
 		myassert(HTML::convert_link(link4, root_link) == "http://www.akwan.com.br/teste/d/c.html");
 		myassert(HTML::convert_link(link5, root_link) == "http://www.fadazan.com.br/Download/jacobmacanhan,%203276.jpg");
 		myassert(HTML::convert_link(link6, root_link) == "http://www.akwan.com.br/teste/search?q=galo");
@@ -195,10 +195,10 @@ class CharsetTest
 		void test()
 		{
 			CharsetConverter cc("UTF8", "ISO-8859-1");
-			myassert(cc.convert("VocÃª Ã© o meu visitante nÃºmero") == "Você é o meu visitante número");
+			myassert(cc.convert("VocÃª Ã© o meu visitante nÃºmero") == "Vocï¿½ ï¿½ o meu visitante nï¿½mero");
 
 			CharsetConverter cc2("ISO-8859-1", "UTF8");
-			myassert(cc2.convert("Você é o meu visitante número") == "VocÃª Ã© o meu visitante nÃºmero");
+			myassert(cc2.convert("Vocï¿½ ï¿½ o meu visitante nï¿½mero") == "VocÃª Ã© o meu visitante nÃºmero");
 		}
 };
 
@@ -229,11 +229,14 @@ int main(int argc, char **argv) {
 	myassert(ht.parse());
 	myassert(ht.string_manip());
 
-	ifstream f(argv[1]);
-	HTML::ParserSax parser;
-//	parser.parse(istreambuf_iterator<char>(f), istreambuf_iterator<char>());
-//	tree<HTML::Node> t = parser.getTree();
-//	cerr << t << endl;
+	if (argc > 1)
+	{
+		ifstream f(argv[1]);
+		HTML::ParserSax parser;
+//		parser.parse(istreambuf_iterator<char>(f), istreambuf_iterator<char>());
+//		tree<HTML::Node> t = parser.getTree();
+//		cerr << t << endl;
+	}
 	
 	TagInitTest test2;
 	test2.test();
