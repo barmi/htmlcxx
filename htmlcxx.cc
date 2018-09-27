@@ -13,6 +13,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <cstdio>
+#include <algorithm>
 
 #include "wingetopt.h"
 
@@ -112,7 +113,28 @@ int main(int argc, char **argv)
 		HTML::ParserDom parser;
 		parser.parse(html);
 		tr = parser.getTree();
-		cout << tr << endl;
+		//cout << tr << endl;
+
+        map<string, int> count_tag;
+        tree<HTML::Node>::pre_order_iterator it = tr.begin();
+        tree<HTML::Node>::pre_order_iterator end = tr.end();
+
+        while ( it != end )
+        {
+            string tag = (string)(*it);
+            if ( it->isTag() && tag.length() > 0 )
+            {
+                transform(tag.begin(), tag.end(), tag.begin(), ::toupper);
+                count_tag[tag] += 1;
+            }
+            ++it;
+        }
+        for (auto &p: count_tag)
+        {
+            // print count of html tags
+            cout << "html:" << p.first << ":" << p.second << endl;
+        }
+
 
 	} catch (exception &e) {
 		cerr << "Exception " << e.what() << " caught" << endl;
@@ -140,8 +162,9 @@ int main(int argc, char **argv)
 			css_parser.parse(css_code);
 		}
 
-		cout << "CSS attributes:" << endl;
-		cout << endl;
+        map<string, int> count_css;
+		//cout << "CSS attributes:" << endl;
+		//cout << endl;
 		while (it != end) 
 		{
 
@@ -168,10 +191,14 @@ int main(int argc, char **argv)
 				map<string, string>::const_iterator mend = attributes.end();
 
 				string tag = it->tagName();
-				for(unsigned int i = 0; i < tag.size(); ++i) tag[i] = ::toupper(tag[i]);
-				cout << tag << "@[" << it->offset() << ":" << it->offset() + it->length() << ")" << endl;
-				for(; mit != mend; ++mit) cout << mit->first << ": " << mit->second << endl;
-				cout << endl;
+				//for(unsigned int i = 0; i < tag.size(); ++i) tag[i] = ::toupper(tag[i]);
+				//cout << tag << "@[" << it->offset() << ":" << it->offset() + it->length() << ")" << endl;
+				//for(; mit != mend; ++mit) cout << mit->first << ": " << mit->second << endl;
+				for(; mit != mend; ++mit)
+				{
+				    count_css[mit->first] += 1;
+				}
+				//cout << endl;
 
 
 				if (strcasecmp(it->tagName().c_str(), "STYLE") == 0) 
@@ -193,6 +220,12 @@ int main(int argc, char **argv)
 			}
 			++it;
 		}
+
+        for (auto &p: count_css)
+        {
+            // print count of css attributes
+            cout << "css:" << p.first << ":" << p.second << endl;
+        }
 
 	} catch (exception &e) {
 		cerr << "Exception " << e.what() << " caught" << endl;
