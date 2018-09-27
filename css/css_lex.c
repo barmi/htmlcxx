@@ -1912,7 +1912,7 @@ YY_RULE_SETUP
 case 42:
 YY_RULE_SETUP
 #line 149 "css_lex.l"
-{fprintf(stderr, "Illegal character (%d)\n", *yytext);}
+{/*fprintf(stderr, "Illegal character (%d)\n", *yytext);*/}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
