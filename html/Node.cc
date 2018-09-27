@@ -89,7 +89,10 @@ void Node::parseAttributes()
 		else
 		{
 //			fprintf(stderr, "D: %s\n", key.c_str());
-			mAttributes.insert(make_pair(key, string()));
+			if (!key.empty())
+			{
+				mAttributes.insert(make_pair(key, string()));
+			}
 		}
 	}
 }
