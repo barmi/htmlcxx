@@ -584,13 +584,6 @@ hexcolor
 
 %%
 
-
-
-
-
-
-
-
 struct selector_list_t* css_parse(const char *buffer, int buf_len) {
 	struct selector_list_t *ret = NULL;
 	//yydebug = 1;
