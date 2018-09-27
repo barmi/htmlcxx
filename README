@@ -27,6 +27,10 @@ htmlcxx does not insert non-existent stuff in your html. Therefore, serializing
 the DOM tree gives exactly the same bytes contained in the original HTML
 document.
 
+        News for version 0.86
+        =====================
+
+Fixed a few compilation problems.
 
         News for version 0.85
         =====================
@@ -126,11 +130,6 @@ Enjoy!
 
 Davi de Castro Reis - <davi (a) users sf net>
 
-Robson Braga Araújo - <braga (a) users sf net>
+Robson Braga Araï¿½jo - <braga (a) users sf net>
 
-Last Updated: Thu Mar 24 00:56:05 2005
-
-
-
-
-
+Last Updated: Tue Dec  8 20:37:41 BRST 2015

@@ -3,7 +3,7 @@
 
 #AC_PREREQ(2.57)
 AC_INIT(htmlcxx.cc)
-AM_INIT_AUTOMAKE(htmlcxx, 0.85)
+AM_INIT_AUTOMAKE(htmlcxx, 0.86)
 AM_CONFIG_HEADER([config.h])
 AM_DISABLE_STATIC
 
