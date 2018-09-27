@@ -1,8 +1,7 @@
 htmlcxx
 =======
-
-a simple html and css parser written in C++. clone of http://htmlcxx.sourceforge.net/
-new code repository : https://sourceforge.net/p/htmlcxx/code/
+* a simple html and css parser written in C++. clone of http://htmlcxx.sourceforge.net/
+* new code repository : https://sourceforge.net/p/htmlcxx/code/
 
 install
 -------
