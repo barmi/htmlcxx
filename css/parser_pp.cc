@@ -1,6 +1,10 @@
 #include <algorithm>
 #include <iterator>
 #include <cctype>
+#include <iostream>
+#include <sstream>
+#include <set>
+#include <string>
 #include "parser.h"
 #include "parser_pp.h"
 
@@ -55,16 +59,17 @@ bool Parser::Selector::match(const Selector& s) const
 {
 	if (mElement.empty()) return false;
 
-	if (s.mElement.empty()) 
+	set<string> cls;
+	istringstream s1(mEClass);
+	string str;
+	while (s1 >> str)
 	{
-		Selector s2(s);
-		s2.mElement = mElement;
-		return *this == s2;
-	} 
-	else 
-	{
-		return *this == s;
+	    cls.insert(str);
 	}
+
+	return ((!s.mElement.empty() && mElement == s.mElement) ||
+            (!s.mId.empty() && mId == s.mId) ||
+            (!s.mEClass.empty() && cls.find(s.mEClass) != cls.end()));
 }
 
 bool Parser::Selector::operator==(const Selector& s) const 
@@ -135,7 +140,7 @@ bool Parser::match(const vector<Selector>& selector, const vector<Selector>& pat
 //	cout << "Trying: " << path[0] << " against " << selector[0] << endl;
 	if (element.match(selector[0])) 
 	{
-//		cout << "Matched" << endl;
+//		cout << "** Matched" << endl;
 		vector<Selector>::const_iterator m, n;
 		m = path.begin() + 1;
 		n = selector.begin() + 1;
@@ -146,7 +151,11 @@ bool Parser::match(const vector<Selector>& selector, const vector<Selector>& pat
 			if (m == path.end()) break;
 			else ++n, ++m;
 		}
-		if (n == selector.end()) return true;
+		if (n == selector.end())
+		{
+//		    cout << "** true **" << endl;
+		    return true;
+		}
 	}
 
 	return false;
@@ -159,7 +168,7 @@ Parser::getAttributes(const vector<Selector>& path) const
 	
 	for (RuleSet::const_iterator i = mRuleSets.begin(); i != mRuleSets.end(); ++i) 
 	{
-		if (match(i->first, path)) 
+		if (match(i->first, path))
 		{
 			map<string, Attribute>::const_iterator j;
 			for (j = i->second.begin(); j != i->second.end(); ++j) 

@@ -38,12 +38,13 @@ int main(int argc, char **argv)
 {
 	tree<HTML::Node> tr;
 	bool parse_css = true;
+	bool detail_print = false;
 	string css_code;
 	try 
 	{
 		while (1) 
 		{
-			signed char c = getopt(argc, argv, "hVC");	
+			signed char c = getopt(argc, argv, "hVCD");
 			if(c == -1) break;
 			switch(c) {
 				case 'h':
@@ -56,6 +57,9 @@ int main(int argc, char **argv)
 				case 'C':
 					parse_css = false;
 					break;
+				case 'D':
+				    detail_print = true;
+				    break;
 				default:
 					usage(argv[0]);
 					exit(1);
@@ -113,7 +117,12 @@ int main(int argc, char **argv)
 		HTML::ParserDom parser;
 		parser.parse(html);
 		tr = parser.getTree();
-		//cout << tr << endl;
+		if (detail_print)
+		{
+		    cout << "-- HTML:start ------------" << endl;
+		    cout << tr << endl;
+		    cout << "-- HTML:end --------------" << endl;
+		}
 
         map<string, int> count_tag;
         tree<HTML::Node>::pre_order_iterator it = tr.begin();
@@ -184,6 +193,8 @@ int main(int argc, char **argv)
 					s.setPseudoElement(CSS::Parser::NONE_ELEMENT);
 					v.push_back(s);
 					k = tr.parent(k);
+					//cout << "selector:" << k->tagName() << "," << k->attribute("id").second << "," << k->attribute("class").second << endl;
+					//cout << s << endl;
 				}
 
 				map<string, string> attributes = css_parser.getAttributes(v);
@@ -191,14 +202,24 @@ int main(int argc, char **argv)
 				map<string, string>::const_iterator mend = attributes.end();
 
 				string tag = it->tagName();
-				//for(unsigned int i = 0; i < tag.size(); ++i) tag[i] = ::toupper(tag[i]);
-				//cout << tag << "@[" << it->offset() << ":" << it->offset() + it->length() << ")" << endl;
-				//for(; mit != mend; ++mit) cout << mit->first << ": " << mit->second << endl;
-				for(; mit != mend; ++mit)
+				if (detail_print)
 				{
-				    count_css[mit->first] += 1;
+				    for(unsigned int i = 0; i < tag.size(); ++i) tag[i] = ::toupper(tag[i]);
+				    cout << tag << "@[" << it->offset() << ":" << it->offset() + it->length() << ")" << endl;
+				    for(; mit != mend; ++mit)
+				    {
+				        cout << mit->first << ": " << mit->second << endl;
+				        count_css[mit->first] += 1;
+				    }
+				    cout << endl;
 				}
-				//cout << endl;
+				else
+				{
+                    for(; mit != mend; ++mit)
+                    {
+                        count_css[mit->first] += 1;
+                    }
+                }
 
 
 				if (strcasecmp(it->tagName().c_str(), "STYLE") == 0) 
