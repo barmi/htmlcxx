@@ -44,14 +44,14 @@ int yyerror(void *yyparam, const char *s) {
 %token LENGTH
 %token EMS
 %token EXS
-%token LINK_PSCLASS_AFTER_IDENT
+%token PSCLASS_AFTER_IDENT
 %token VISITED_PSCLASS_AFTER_IDENT
 %token ACTIVE_PSCLASS_AFTER_IDENT
 %token FIRST_LINE_AFTER_IDENT
 %token FIRST_LETTER_AFTER_IDENT
 %token HASH_AFTER_IDENT
 %token CLASS_AFTER_IDENT
-%token LINK_PSCLASS
+%token PSCLASS
 %token VISITED_PSCLASS
 %token ACTIVE_PSCLASS
 %token FIRST_LINE
@@ -437,15 +437,11 @@ element_name
 ;
 
 pseudo_class					/* as in:  A:link */
-: LINK_PSCLASS_AFTER_IDENT { $$ = PS_CLASS_LINK; }
-| VISITED_PSCLASS_AFTER_IDENT { $$ = PS_CLASS_VISITED; }
-| ACTIVE_PSCLASS_AFTER_IDENT { $$ = PS_CLASS_ACTIVE; }
+: PSCLASS_AFTER_IDENT { $$ = PS_CLASS; }
 ;
 
 solitary_pseudo_class				/* as in:  :link */
-: LINK_PSCLASS { $$ = PS_CLASS_LINK; }
-| VISITED_PSCLASS { $$ = PS_CLASS_VISITED; }
-| ACTIVE_PSCLASS { $$ = PS_CLASS_ACTIVE; }
+: PSCLASS { $$ = PS_CLASS; }
 ;
 
 class						/* as in:  P.note */

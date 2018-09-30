@@ -2,6 +2,7 @@
 #define __CSS_PARSER_H__
 
 #define PS_CLASS_NONE 0
+#define PS_CLASS 1
 #define PS_CLASS_LINK 1
 #define PS_CLASS_VISITED 2
 #define PS_CLASS_ACTIVE 3

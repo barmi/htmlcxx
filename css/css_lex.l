@@ -10,8 +10,8 @@
 %option noyywrap
 
 unicode		\\[0-9a-f]{1,4}
-latin1		[¡-ÿ]
-escape		{unicode}|\\[ -~¡-ÿ]
+latin1		[ï¿½-ï¿½]
+escape		{unicode}|\\[ -~ï¿½-ï¿½]
 stringchar	{escape}|{latin1}|[ !#$%&(-~]
 nmstrt		[a-z]|{latin1}|{escape}
 nmchar		[-a-z0-9]|{latin1}|{escape}
@@ -96,11 +96,10 @@ string		\"({stringchar}|\')*\"|\'({stringchar}|\")*\'
 							return EXS;
 						}
 
-<AFTER_IDENT>":"link		{return LINK_PSCLASS_AFTER_IDENT;}
-<AFTER_IDENT>":"visited	{return VISITED_PSCLASS_AFTER_IDENT;}
-<AFTER_IDENT>":"active	{return ACTIVE_PSCLASS_AFTER_IDENT;}
-<AFTER_IDENT>":"first-line	{return FIRST_LINE_AFTER_IDENT;}
-<AFTER_IDENT>":"first-letter	{return FIRST_LETTER_AFTER_IDENT;}
+<AFTER_IDENT>":"{name}		{
+                                lvalp->lexeme = strdup(yytext+1);
+                                return PSCLASS_AFTER_IDENT;
+                            }
 <AFTER_IDENT>"#"{name}		{
 								lvalp->lexeme = strdup(yytext+1);
 								return HASH_AFTER_IDENT;
@@ -110,11 +109,11 @@ string		\"({stringchar}|\')*\"|\'({stringchar}|\")*\'
 								return CLASS_AFTER_IDENT;
 							}
 
-":"link				{BEGIN(AFTER_IDENT); return LINK_PSCLASS;}
-":"visited			{BEGIN(AFTER_IDENT); return VISITED_PSCLASS;}
-":"active			{BEGIN(AFTER_IDENT); return ACTIVE_PSCLASS;}
-":"first-line		{BEGIN(AFTER_IDENT); return FIRST_LINE;}
-":"first-letter		{BEGIN(AFTER_IDENT); return FIRST_LETTER;}
+":"{name}			{
+                        BEGIN(AFTER_IDENT);
+                        lvalp->lexeme = strdup(yytext+1);
+                        return PSCLASS;
+                    }
 "#"{name}			{
 						BEGIN(AFTER_IDENT);
 						lvalp->lexeme = strdup(yytext+1);
@@ -146,7 +145,7 @@ rgb\({w}{num}%?{w}\,{w}{num}%?{w}\,{w}{num}%?{w}\)	{
 \<\!\-\-			{BEGIN(0); return CDO;}
 \-\-\>				{BEGIN(0); return CDC;}
 \/\/				{BEGIN(0); return CSL;}
-.				{fprintf(stderr, "Illegal character (%d)\n", *yytext);}
+.				{/*fprintf(stderr, "Illegal character (%d)\n", *yytext);*/}
 
 %%
 
