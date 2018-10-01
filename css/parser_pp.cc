@@ -8,6 +8,8 @@
 #include "parser.h"
 #include "parser_pp.h"
 
+//#define DEBUG_PRINT
+
 using namespace std;
 
 const char *htmlcxx::CSS::IE_CSS = DEFAULT_CSS;
@@ -137,23 +139,31 @@ bool Parser::match(const vector<Selector>& selector, const vector<Selector>& pat
 	if (selector.empty()) return false;
 
 	const Selector& element = path[0];
-//	cout << "Trying: " << path[0] << " against " << selector[0] << endl;
-	if (element.match(selector[0])) 
+#ifdef DEBUG_PRINT
+	cout << "Trying: " << path[0] << " against " << selector[0] << endl;
+#endif
+	if (element.match(selector[0]))
 	{
-//		cout << "** Matched" << endl;
+#ifdef DEBUG_PRINT
+		cout << "** Matched" << endl;
+#endif
 		vector<Selector>::const_iterator m, n;
 		m = path.begin() + 1;
 		n = selector.begin() + 1;
 		while (n != selector.end()) 
 		{
-//			cout << "Trying: " << *m << " against " << *n << endl;
+#ifdef DEBUG_PRINT
+			cout << "Trying: " << *m << " against " << *n << endl;
+#endif
 			while (m != path.end() && !m->match(*n)) ++m;
 			if (m == path.end()) break;
 			else ++n, ++m;
 		}
 		if (n == selector.end())
 		{
-//		    cout << "** true **" << endl;
+#ifdef DEBUG_PRINT
+		    cout << "** true **" << endl;
+#endif
 		    return true;
 		}
 	}
@@ -328,6 +338,7 @@ ostream& operator<<(ostream& out, const Parser::Selector& s)
 
 ostream& operator<<(ostream &out, const CSS::Parser& p) 
 {
+    cout << "---------- css out begin" << endl;
 	for (CSS::Parser::RuleSet::const_iterator i = p.mRuleSets.begin(); i != p.mRuleSets.end(); ++i)
 	{
 		if (i != p.mRuleSets.begin()) out << endl;

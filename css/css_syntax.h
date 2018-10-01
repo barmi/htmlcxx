@@ -55,24 +55,20 @@ extern int yydebug;
     EMS = 265,
     EXS = 266,
     PSCLASS_AFTER_IDENT = 267,
-    VISITED_PSCLASS_AFTER_IDENT = 268,
-    ACTIVE_PSCLASS_AFTER_IDENT = 269,
-    FIRST_LINE_AFTER_IDENT = 270,
-    FIRST_LETTER_AFTER_IDENT = 271,
-    HASH_AFTER_IDENT = 272,
-    CLASS_AFTER_IDENT = 273,
-    PSCLASS = 274,
-    VISITED_PSCLASS = 275,
-    ACTIVE_PSCLASS = 276,
-    FIRST_LINE = 277,
-    FIRST_LETTER = 278,
-    HASH = 279,
-    CLASS = 280,
-    URL = 281,
-    RGB = 282,
-    CDO = 283,
-    CDC = 284,
-    CSL = 285
+    HASH_AFTER_IDENT = 268,
+    CLASS_AFTER_IDENT = 269,
+    PSCLASS = 270,
+    VISITED_PSCLASS = 271,
+    ACTIVE_PSCLASS = 272,
+    FIRST_LINE = 273,
+    FIRST_LETTER = 274,
+    HASH = 275,
+    CLASS = 276,
+    URL = 277,
+    RGB = 278,
+    CDO = 279,
+    CDC = 280,
+    CSL = 281
   };
 #endif
 /* Tokens.  */
@@ -86,24 +82,20 @@ extern int yydebug;
 #define EMS 265
 #define EXS 266
 #define PSCLASS_AFTER_IDENT 267
-#define VISITED_PSCLASS_AFTER_IDENT 268
-#define ACTIVE_PSCLASS_AFTER_IDENT 269
-#define FIRST_LINE_AFTER_IDENT 270
-#define FIRST_LETTER_AFTER_IDENT 271
-#define HASH_AFTER_IDENT 272
-#define CLASS_AFTER_IDENT 273
-#define PSCLASS 274
-#define VISITED_PSCLASS 275
-#define ACTIVE_PSCLASS 276
-#define FIRST_LINE 277
-#define FIRST_LETTER 278
-#define HASH 279
-#define CLASS 280
-#define URL 281
-#define RGB 282
-#define CDO 283
-#define CDC 284
-#define CSL 285
+#define HASH_AFTER_IDENT 268
+#define CLASS_AFTER_IDENT 269
+#define PSCLASS 270
+#define VISITED_PSCLASS 271
+#define ACTIVE_PSCLASS 272
+#define FIRST_LINE 273
+#define FIRST_LETTER 274
+#define HASH 275
+#define CLASS 276
+#define URL 277
+#define RGB 278
+#define CDO 279
+#define CDC 280
+#define CSL 281
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -120,7 +112,7 @@ union YYSTYPE
 	int pseudo_class;
 	int pseudo_element;
 
-#line 124 "css_syntax.h" /* yacc.c:1909  */
+#line 116 "css_syntax.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -10,11 +10,11 @@
 %option noyywrap
 
 unicode		\\[0-9a-f]{1,4}
-latin1		[�-�]
-escape		{unicode}|\\[ -~�-�]
+latin1		[¡-ÿ]
+escape		{unicode}|\\[ -~¡-ÿ]
 stringchar	{escape}|{latin1}|[ !#$%&(-~]
-nmstrt		[a-z]|{latin1}|{escape}
-nmchar		[-a-z0-9]|{latin1}|{escape}
+nmstrt		[a-z_]|{latin1}|{escape}
+nmchar		[-a-z0-9_]|{latin1}|{escape}
 ident		{nmstrt}{nmchar}*
 name		{nmchar}+
 d		[0-9]
@@ -96,10 +96,6 @@ string		\"({stringchar}|\')*\"|\'({stringchar}|\")*\'
 							return EXS;
 						}
 
-<AFTER_IDENT>":"{name}		{
-                                lvalp->lexeme = strdup(yytext+1);
-                                return PSCLASS_AFTER_IDENT;
-                            }
 <AFTER_IDENT>"#"{name}		{
 								lvalp->lexeme = strdup(yytext+1);
 								return HASH_AFTER_IDENT;
@@ -109,11 +105,6 @@ string		\"({stringchar}|\')*\"|\'({stringchar}|\")*\'
 								return CLASS_AFTER_IDENT;
 							}
 
-":"{name}			{
-                        BEGIN(AFTER_IDENT);
-                        lvalp->lexeme = strdup(yytext+1);
-                        return PSCLASS;
-                    }
 "#"{name}			{
 						BEGIN(AFTER_IDENT);
 						lvalp->lexeme = strdup(yytext+1);

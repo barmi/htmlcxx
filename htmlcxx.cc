@@ -143,6 +143,7 @@ int main(int argc, char **argv)
             // print count of html tags
             cout << "html:" << p.first << ":" << p.second << endl;
         }
+        cout << "html-count:" << count_tag.size() << endl;
 
 
 	} catch (exception &e) {
@@ -170,6 +171,9 @@ int main(int argc, char **argv)
 		if(css_code.length()) {
 			css_parser.parse(css_code);
 		}
+		cout << "----------css-------------" << endl;
+        cout << css_parser << endl;
+		cout << "----------(css)-------------" << endl;
 
         map<string, int> count_css;
 		//cout << "CSS attributes:" << endl;
@@ -237,6 +241,9 @@ int main(int argc, char **argv)
 					}
 
 					css_parser.parse(css_snippet);
+                    cout << "----------css_snippet-------------" << endl;
+                    cout << css_parser << endl;
+                    cout << "----------(css_snippet)-------------" << endl;
 				}
 			}
 			++it;
@@ -247,7 +254,7 @@ int main(int argc, char **argv)
             // print count of css attributes
             cout << "css:" << p.first << ":" << p.second << endl;
         }
-
+        cout << "css-count:" << count_css.size() << endl;
 	} catch (exception &e) {
 		cerr << "Exception " << e.what() << " caught" << endl;
 		exit(1);

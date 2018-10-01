@@ -5,7 +5,7 @@
 #include "parser.h"
 
 #define YYERROR_VERBOSE 1
-//#define YYDEBUG 1
+#define YYDEBUG 1
 
 %}
 
@@ -45,10 +45,6 @@ int yyerror(void *yyparam, const char *s) {
 %token EMS
 %token EXS
 %token PSCLASS_AFTER_IDENT
-%token VISITED_PSCLASS_AFTER_IDENT
-%token ACTIVE_PSCLASS_AFTER_IDENT
-%token FIRST_LINE_AFTER_IDENT
-%token FIRST_LETTER_AFTER_IDENT
 %token HASH_AFTER_IDENT
 %token CLASS_AFTER_IDENT
 %token PSCLASS
@@ -72,8 +68,6 @@ int yyerror(void *yyparam, const char *s) {
 %type <selector_list> selectors
 %type <selector_list> ruleset
 %type <selector_list> rulesets
-%type <pseudo_element> pseudo_element
-%type <selector> solitary_pseudo_element
 %type <letter> unary_operator
 %type <letter> operator
 %type <property> declaration
@@ -243,24 +237,7 @@ declarations
 ;
 
 selector
-: simple_selectors pseudo_element	{
-										struct selector_t *pos = $1;
-										while (pos->next != NULL) {
-											pos = pos->next;
-										}
-										pos->pseudo_element = $2;
-										$$ = $1;
-									}
-| simple_selectors solitary_pseudo_element	{
-												struct selector_t *pos = $1;
-												while (pos->next != NULL) {
-													pos = pos->next;
-												}
-												pos->next = $2;
-												$$ = $1;
-											}
-| simple_selectors	{ $$ = $1; }
-| solitary_pseudo_element	{ $$ = $1; }
+: simple_selectors	{ $$ = $1; }
 | selector error { $$ = NULL; }
 | error { $$ = NULL; }
 ;
@@ -437,11 +414,11 @@ element_name
 ;
 
 pseudo_class					/* as in:  A:link */
-: PSCLASS_AFTER_IDENT { $$ = PS_CLASS; }
+: ':' IDENT { $$ = PS_CLASS; }
 ;
 
 solitary_pseudo_class				/* as in:  :link */
-: PSCLASS { $$ = PS_CLASS; }
+: ':' IDENT { $$ = PS_CLASS; }
 ;
 
 class						/* as in:  P.note */
@@ -450,34 +427,6 @@ class						/* as in:  P.note */
 
 solitary_class					/* as in:  .note */
 : CLASS { $$ = $1; }
-;
-
-pseudo_element					/* as in:  P:first-line */
-: FIRST_LETTER_AFTER_IDENT	{ $$ = PS_ELEMENT_FIRST_LETTER; }
-| FIRST_LINE_AFTER_IDENT	{ $$ = PS_ELEMENT_FIRST_LINE; }
-;
-
-solitary_pseudo_element				/* as in:  :first-line */
-: FIRST_LETTER	{
-					$$ = (struct selector_t*)
-						malloc(sizeof(struct selector_t));
-					$$->element_name = NULL;
-					$$->id = NULL;
-					$$->e_class = NULL;
-					$$->pseudo_class = 0;
-					$$->pseudo_element = PS_ELEMENT_FIRST_LETTER;
-					$$->next = NULL;
-				}
-| FIRST_LINE	{
-					$$ = (struct selector_t*)
-						malloc(sizeof(struct selector_t));
-					$$->element_name = NULL;
-					$$->id = NULL;
-					$$->e_class = NULL;
-					$$->pseudo_class = 0;
-					$$->pseudo_element = PS_ELEMENT_FIRST_LINE;
-					$$->next = NULL;
-				}
 ;
 
 /* There is a constraint on the id and solitary_id that the
